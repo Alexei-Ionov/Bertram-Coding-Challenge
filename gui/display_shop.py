@@ -11,6 +11,8 @@ menu_items = [
         ("Mocha", "$4.50", "$5.50", "$6.50"),
         ("Special Drink", "$6.00", "$6.50", "$7.50"),
     ]
+associated_vars = []
+total_price_global = ""
 def display_menu(menu_frame):
     # Create a frame to hold the menu
     # Define the menu items and their prices for small, medium, and large sizes
@@ -54,10 +56,21 @@ def display_drop_down(buttons_frame):
         # Create dropdown menu for coworker with all combinations
         default_choice = tk.StringVar()
         default_choice.set(all_combinations[0])  # Set default choice
+        associated_vars.append(default_choice)
         dropdown = tk.OptionMenu(buttons_frame, default_choice, *all_combinations)
         dropdown.config(font=("Helvetica", 16))
         dropdown.grid(row=1, column=col, padx=10, pady=5)
-
+def calculate_total_price():
+    price = 0.0
+    for var in associated_vars:
+        selected_value = var.get()
+        price += float(selected_value[-4:])
+    return str(price)
+        
+def on_button_click(event, label):
+    if event.num == 1:  # Check if left mouse button was clicked
+        label.config(text=f"The total price is... ${calculate_total_price()}")
+        
 
 def display_shop(root):
      # Create a frame to hold the coffee shop name and logo
@@ -90,6 +103,18 @@ def display_shop(root):
     buttons_frame = tk.Frame(root)
     buttons_frame.pack(pady=20)
 
-    price_frame = tk.Frame(root)
-    price_frame.pack(pady=20)
     display_drop_down(buttons_frame)
+
+    button = tk.Button(root, text="Let's calculate the total price", font=("Times New Roman", 20))
+    button.pack()
+
+    global total_price_label
+    total_price_frame = tk.Frame(root)
+    total_price_frame.pack(pady=20)
+
+    total_price_label = tk.Label(total_price_frame, text=f"The total price is... ${total_price_global}", font=("Times New Roman", 20), fg="red")
+    total_price_label.grid(pady=20)
+    
+    # Bind the left mouse button click event to the on_button_click function
+    button.bind("<Button-1>", lambda event, arg1=total_price_label: on_button_click(event, arg1))
+    
