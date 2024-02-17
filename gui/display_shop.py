@@ -1,8 +1,8 @@
 import tkinter as tk ##tkinter is already downloaded for us in python! yay
-from classes.class_coworkers import coworkers
-coworkers_list = coworkers().coworkers_list
 from gui.clear_display import clear_gui
 from gui.payment_display import display_payment
+
+
 menu_items = [
         ("Drink", "Small", "Medium", "Large"),
         ("Regular", "$4.50", "$5.50", "$6.50"),
@@ -14,6 +14,7 @@ menu_items = [
     ]
 associated_vars = []
 total_price_global = ""
+
 def display_menu(menu_frame):
     # Create a frame to hold the menu
     # Define the menu items and their prices for small, medium, and large sizes
@@ -25,9 +26,10 @@ def display_menu(menu_frame):
             item_label.grid(row=i, column=j, padx=10, pady=5, sticky="w")
     # Display the menu items and prices in a grid
 
-def display_drop_down(buttons_frame):
+def display_drop_down(buttons_frame, list):
     # Create buttons and dropdown menus for each coworker
-    
+    if list == None:
+        list = cw_list
     drink_to_index = {
         "Regular":0, 
         "Latte":1,
@@ -36,7 +38,7 @@ def display_drop_down(buttons_frame):
         "Mocha":4,
         "Special Drink":5
         }
-    for col, coworker in enumerate(coworkers_list):
+    for col, coworker in enumerate(list):
         # Create label for coworker
         coworker_label = tk.Label(buttons_frame, text=coworker.name + ' ' +f"${coworker.paid_for}" + ":", font=("Helvetica", 24))
         coworker_label.grid(row=0, column=col, padx=10, pady=5, sticky="w")
@@ -74,15 +76,15 @@ def on_button_click_price(event, label):
         total_price_global = calculate_total_price()
         label.config(text=f"The total price is... ${total_price_global}")
 
-def on_button_click_payment(event, root):
+def on_button_click_payment(event, root, day, list, restart):
     if event.num == 1:  # Check if left mouse button was clicked
         if total_price_global != "": 
-            display_payment(root, total_price_global)
+            display_payment(root, total_price_global, day, list, restart)
         else: 
             print("pass")
             
 
-def display_shop(root):
+def display_shop(root, day, list, restart):
      # Create a frame to hold the coffee shop name and logo
     clear_gui(root)
     shop_frame = tk.Frame(root)
@@ -106,14 +108,12 @@ def display_shop(root):
     menu_frame.pack(pady=20)
     # Define the menu items and their prices
     display_menu(menu_frame)
-    # Define the coworkers
-    
 
     # Create a frame to hold the coworker buttons and dropdown menus
     buttons_frame = tk.Frame(root)
     buttons_frame.pack(pady=20)
 
-    display_drop_down(buttons_frame)
+    display_drop_down(buttons_frame, list)
 
     button = tk.Button(root, text="Let's calculate the total price", font=("Times New Roman", 20))
     button.pack()
@@ -131,5 +131,5 @@ def display_shop(root):
     payment_buttons_frame.pack(pady=20)
     button = tk.Button(root, text="Click here to get the unfortunate coworker who has to pay : )", font=("Times New Roman", 20))
     button.pack()
-
-    button.bind("<Button-1>", lambda event, arg1=root: on_button_click_payment(event, arg1))
+  
+    button.bind("<Button-1>", lambda event, arg1=root, arg2=day,arg3=list,arg4=restart: on_button_click_payment(event, arg1,arg2,arg3,arg4))
