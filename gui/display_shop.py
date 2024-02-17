@@ -2,6 +2,7 @@ import tkinter as tk ##tkinter is already downloaded for us in python! yay
 from classes.class_coworkers import coworkers
 coworkers_list = coworkers().coworkers_list
 from gui.clear_display import clear_gui
+from gui.payment_display import display_payment
 menu_items = [
         ("Drink", "Small", "Medium", "Large"),
         ("Regular", "$4.50", "$5.50", "$6.50"),
@@ -19,7 +20,7 @@ def display_menu(menu_frame):
    
     for i in range(len(menu_items)):
         for j in range(len(menu_items[0])):
-            font_size = 30 if i == 0 else 16
+            font_size = 30 if (i == 0 and j == 0) else 20 if (i == 0 and j == 1) else 25 if  (i == 0 and j == 2) else 16
             item_label = tk.Label(menu_frame, text=menu_items[i][j], font=("Helvetica", font_size), bg="#D2B48C")
             item_label.grid(row=i, column=j, padx=10, pady=5, sticky="w")
     # Display the menu items and prices in a grid
@@ -67,10 +68,19 @@ def calculate_total_price():
         price += float(selected_value[-4:])
     return str(price)
         
-def on_button_click(event, label):
+def on_button_click_price(event, label):
     if event.num == 1:  # Check if left mouse button was clicked
-        label.config(text=f"The total price is... ${calculate_total_price()}")
-        
+        global total_price_global
+        total_price_global = calculate_total_price()
+        label.config(text=f"The total price is... ${total_price_global}")
+
+def on_button_click_payment(event, root):
+    if event.num == 1:  # Check if left mouse button was clicked
+        if total_price_global != "": 
+            display_payment(root, total_price_global)
+        else: 
+            print("pass")
+            
 
 def display_shop(root):
      # Create a frame to hold the coffee shop name and logo
@@ -108,7 +118,6 @@ def display_shop(root):
     button = tk.Button(root, text="Let's calculate the total price", font=("Times New Roman", 20))
     button.pack()
 
-    global total_price_label
     total_price_frame = tk.Frame(root)
     total_price_frame.pack(pady=20)
 
@@ -116,5 +125,11 @@ def display_shop(root):
     total_price_label.grid(pady=20)
     
     # Bind the left mouse button click event to the on_button_click function
-    button.bind("<Button-1>", lambda event, arg1=total_price_label: on_button_click(event, arg1))
+    button.bind("<Button-1>", lambda event, arg1=total_price_label: on_button_click_price(event, arg1))
     
+    payment_buttons_frame = tk.Frame(root)
+    payment_buttons_frame.pack(pady=20)
+    button = tk.Button(root, text="Click here to get the unfortunate coworker who has to pay : )", font=("Times New Roman", 20))
+    button.pack()
+
+    button.bind("<Button-1>", lambda event, arg1=root: on_button_click_payment(event, arg1))
