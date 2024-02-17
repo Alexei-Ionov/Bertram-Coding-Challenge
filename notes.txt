@@ -1,0 +1,18 @@
+the idea is this: 
+
+- i'll create a story-like program where each day I the coworkers go to coffee shop, decide what cofee they want
+  then one person pays for it which adds to their total that they've spent, screen fades and the next day statrs
+
+- selection algorithm for who pays will be as follows: 
+    - turn gets decided by who's payed the least. 
+        - if multiple people have paid the same amount (such as in the case in the beginnning), then we can simulate a pseudo-random n-sided dice toss
+
+    
+GUI: 
+- gui for story line (ex: DAY 1)
+- fades to black
+- gui of coworkers walking to the coffee shop
+- UI which allows user to determine what each person gets for a drink. HOWEVER, bob always gets a cappucino (good choice) and jeremy likes his cofee black  
+- gui for cofee orders & prices
+- sidebar gui showing total cost each coworker has thus far paid for 
+- 
