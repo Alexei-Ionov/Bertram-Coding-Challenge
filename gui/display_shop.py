@@ -1,40 +1,88 @@
 import tkinter as tk ##tkinter is already downloaded for us in python! yay
-
 from classes.class_coworkers import coworkers
+coworkers_list = coworkers().coworkers_list
+from gui.clear_display import clear_gui
+menu_items = [
+        ("Drink", "Small", "Medium", "Large"),
+        ("Regular", "$4.50", "$5.50", "$6.50"),
+        ("Latte", "$4.50", "$5.50", "$6.50"),
+        ("Cappuccino", "$3.50", "$4.50", "$5.50"),
+        ("Espresso", "$2.00", "$2.50", "$3.00"),
+        ("Mocha", "$4.50", "$5.50", "$6.50"),
+        ("Special Drink", "$6.00", "$6.50", "$7.50"),
+    ]
+def display_menu(menu_frame):
+    # Create a frame to hold the menu
+    # Define the menu items and their prices for small, medium, and large sizes
+   
+    for i in range(len(menu_items)):
+        for j in range(len(menu_items[0])):
+            font_size = 30 if i == 0 else 16
+            item_label = tk.Label(menu_frame, text=menu_items[i][j], font=("Helvetica", font_size), bg="#D2B48C")
+            item_label.grid(row=i, column=j, padx=10, pady=5, sticky="w")
+    # Display the menu items and prices in a grid
 
-coworkers = coworkers()
+def display_drop_down(buttons_frame):
+    # Create buttons and dropdown menus for each coworker
+    
+    drink_to_index = {
+        "Regular":0, 
+        "Latte":1,
+        "Cappuccino":2,
+        "Espresso":3,
+        "Mocha":4,
+        "Special Drink":5
+        }
+    for col, coworker in enumerate(coworkers_list):
+        # Create label for coworker
+        coworker_label = tk.Label(buttons_frame, text=coworker.name + ' ' +f"${coworker.paid_for}" + ":", font=("Helvetica", 24))
+        coworker_label.grid(row=0, column=col, padx=10, pady=5, sticky="w")
+
+        # Create a list to store all combinations of menu items and sizes
+        all_combinations = []
+        if coworker.order.drink != "None":
+            i = drink_to_index[coworker.order.drink]
+            for j in range(1, len(menu_items[0])):
+                combination = f"{menu_items[i+1][0]} {menu_items[i+1][j]}"  # Combine item name and size
+                all_combinations.append(combination)
+        else:
+            for i in range(1, len(menu_items)):
+                for j in range(1, len(menu_items[0])):
+                    combination = f"{menu_items[i][0]} {menu_items[i][j]}"  # Combine item name and size
+                    all_combinations.append(combination)
+
+        # Create dropdown menu for coworker with all combinations
+        default_choice = tk.StringVar()
+        default_choice.set(all_combinations[0])  # Set default choice
+        dropdown = tk.OptionMenu(buttons_frame, default_choice, *all_combinations)
+        dropdown.config(font=("Helvetica", 16))
+        dropdown.grid(row=1, column=col, padx=10, pady=5)
+
+
 def display_shop(root):
      # Create a frame to hold the coffee shop name and logo
+    clear_gui(root)
     shop_frame = tk.Frame(root)
     shop_frame.pack(pady=20)
 
     # Coffee shop name in brown
-    shop_name_label = tk.Label(shop_frame, text="The Favorite Coffee Shop", font=("Times New Roman", 30), fg="brown")
+    shop_name_label = tk.Label(shop_frame, text="The Favorite Coffee Shop", font=("Times New Roman", 50), fg="brown")
     shop_name_label.grid(row=0, column=1, padx=(20, 40))
 
     # Coffee logos on the side
-    coffee_logo_left = tk.Label(shop_frame, text="[logo]")
-    coffee_logo_left.grid(row=0, column=0)
-    coffee_logo_right = tk.Label(shop_frame, text="[logo]")
-    coffee_logo_right.grid(row=0, column=2)
+    # coffee_icon = tk.PhotoImage(file="../../icons/coffee_cup.png")
+    # coffee_logo_left = tk.Label(shop_frame, image=coffee_icon)
+    # coffee_logo_left.grid(row=0, column=0)
+    # coffee_logo_right = tk.Label(shop_frame, image=coffee_icon)
+    # coffee_logo_right.grid(row=0, column=2)
+       
 
-    # Create a frame to hold the menu
-    menu_frame = tk.Frame(root, bg="lightbrown")
-    menu_frame.pack(pady=20)
     
-
+    # Create a frame to hold the menu
+    menu_frame = tk.Frame(root, bg="#D2B48C") #light brown hex
+    menu_frame.pack(pady=20)
     # Define the menu items and their prices
-    menu_items = ["Latte", "Cappuccino", "Espresso"]
-    menu_prices = {"Latte": "$4.50", "Cappuccino": "$3.50", "Espresso": "$2.50"}
-
-    # Display the menu items and prices in a grid
-    for i, item in enumerate(menu_items):
-        item_label = tk.Label(menu_frame, text=item, font=("Helvetica", 24))
-        item_label.grid(row=i, column=0, padx=10, pady=5, sticky="w")
-
-        price_label = tk.Label(menu_frame, text=menu_prices[item], font=("Helvetica", 24))
-        price_label.grid(row=i, column=1, padx=10, pady=5, sticky="e")
-
+    display_menu(menu_frame)
     # Define the coworkers
     
 
@@ -42,15 +90,6 @@ def display_shop(root):
     buttons_frame = tk.Frame(root)
     buttons_frame.pack(pady=20)
 
-    # Create buttons and dropdown menus for each coworker
-    for i, coworker in enumerate(coworkers):
-        # Create label for coworker
-        coworker_label = tk.Label(buttons_frame, text=coworker + ":", font=("Helvetica", 24))
-        coworker_label.grid(row=0, column=i, padx=10, pady=5, sticky="w")
-
-        # Create dropdown menu for coworker
-        default_choice = tk.StringVar()
-        default_choice.set(coworker.order.drink)  
-        dropdown = tk.OptionMenu(buttons_frame, default_choice, *menu_items)
-        dropdown.config(font=("Helvetica", 16))
-        dropdown.grid(row=1, column=i, padx=10, pady=5)
+    price_frame = tk.Frame(root)
+    price_frame.pack(pady=20)
+    display_drop_down(buttons_frame)
