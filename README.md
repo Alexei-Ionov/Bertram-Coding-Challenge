@@ -7,12 +7,12 @@ I was unfortunately not able to dockerize the application but, on the bright sid
 With that being said, my application does require having Python installed. 
 
 HOW TO RUN: 
-1.) Create a directory somewhere on your local machine 
-2.) CD into this directory. 
-3.) in the CL run: git clone https://github.com/Alexei-Ionov/Bertram-Coding-Challenge
-4.) CD into the created Bertram-Coding-Challenge
-5.) in the CL run: python3 main.py
-6.) The GUI *should* appear on the same window but might appear on another. Please Full Screen the application!
+- Create a directory somewhere on your local machine
+- CD into this directory
+- in the CL run: git clone https://github.com/Alexei-Ionov/Bertram-Coding-Challenge
+- CD into the created Bertram-Coding-Challenge
+- in the CL run: python3 main.py
+- The GUI *should* appear on the same window but might appear on another. Please Full Screen the application!
 
 INSIDE THE GUI:
 - While at the coffee shop display, there will be opportunities for you to interact with the gui as you get to choose the drink of choice for Bob, Jeremey, and the other coworkers
