@@ -9,6 +9,6 @@ def create_day_gui(root, day):
     
     """
     clear_gui(root)
-    day_label = tk.Label(root, text=f"Day {day}", font=("Times New Roman", 30))
+    day_label = tk.Label(root, text=f"Day {day}", font=("Times New Roman", 60))
     day_label.pack(padx=20, pady=20)
     
