@@ -11,7 +11,7 @@ import tkinter as tk ##tkinter is already downloaded for us in python! yay
 from gui.display_day_msg import create_day_gui
 from gui.display_shop import display_shop
 from classes.class_coworkers import coworkers
-# from gui.payment_display import FINISHED
+
 #initalize as global to make it easier to use  
 root = tk.Tk() 
 root.geometry("500x500")

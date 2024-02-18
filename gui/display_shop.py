@@ -11,6 +11,7 @@ menu_items = [
         ("Espresso", "$2.00", "$2.50", "$3.00"),
         ("Mocha", "$4.50", "$5.50", "$6.50"),
         ("Special Drink", "$6.00", "$6.50", "$7.50"),
+        ("Regular (Black)", "$5.00", "$5.50", "$6.00"),
     ]
 total_price_global = ""
 
@@ -35,7 +36,8 @@ def display_drop_down(buttons_frame, list):
         "Cappuccino":2,
         "Espresso":3,
         "Mocha":4,
-        "Special Drink":5
+        "Special Drink":5,
+        "Regular (Black)": 6
         }
     for col, coworker in enumerate(list):
         # Create label for coworker

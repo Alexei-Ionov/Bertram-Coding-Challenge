@@ -62,7 +62,7 @@ def display_payment(root,payment, list):
 
     final_msg_frame = tk.Frame(root)
     final_msg_frame.pack(pady=20)
-    final_msg_label = tk.Label(final_msg_frame, text="Once you've decided the unlucky coworker, please hit enter in the CLI below to go to the next day!")
+    final_msg_label = tk.Label(final_msg_frame, text="Once you've decided the unlucky coworker, please hit enter in the CLI to go to the next day!")
     final_msg_label.grid(row=0, column=1, padx=(20, 40))
 
 
