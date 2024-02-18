@@ -10,7 +10,7 @@ HOW TO RUN:
 - Create a directory somewhere on your local machine
 - CD into this directory
 - in the CL run: git clone https://github.com/Alexei-Ionov/Bertram-Coding-Challenge
-- CD into the created Bertram-Coding-Challenge
+- CD into the created directory: cd Bertram-Coding-Challenge
 - in the CL run: python3 main.py
 - The GUI *should* appear on the same window but might appear on another. Please Full Screen the application!
 
